@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "readeel_flutter",
+            "cwd": "${workspaceFolder}/readeel_flutter",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "readeel_server",
+            "cwd": "${workspaceFolder}/readeel_server",
+            "request": "launch",
+            "type": "dart",
+            "preLaunchTask": "docker_compose_up",
+            "program": "bin/main.dart",
+            "env": {
+                "SERVERPOD_PASSWORD_database": "jRIpX1MqCjy8qKhmml3Kk-GZXr-x_1fT"
+            },
+            "args": [
+                "--apply-migrations"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "readeel (full stack)",
+            "configurations": [
+                "readeel_server",
+                "readeel_flutter"
+            ],
+            "presentation": {
+                "order": 1
+            }
+        }
+    ]
+}

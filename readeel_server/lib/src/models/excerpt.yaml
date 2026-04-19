@@ -1,0 +1,14 @@
+class: Excerpt
+table: excerpts
+fields:
+  bookId: int
+  book: Book?, relation(field=bookId)
+  content: String
+  position: int
+  chapterTitle: String?
+indexes:
+  excerpts_book_idx:
+    fields: bookId
+  excerpts_position_idx:
+    fields: bookId, position
+    unique: true

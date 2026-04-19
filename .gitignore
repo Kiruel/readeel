@@ -1,0 +1,11 @@
+scripts/cache/*
+scripts/gutenbergindex.db
+scripts/ol_dump_works_latest.txt.gz
+scripts/ollama_logs.txt
+scripts/texts/
+rdf-files.tar.bz2
+
+.dart_tool/*
+
+.DS_Store
+scripts/.DS_Store

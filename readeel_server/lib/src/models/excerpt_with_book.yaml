@@ -1,0 +1,4 @@
+class: ExcerptWithBook
+fields:
+  excerpt: Excerpt
+  book: Book

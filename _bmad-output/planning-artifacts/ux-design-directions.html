@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readeel - Design Directions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-paper: #FDFCF0;
+            --text-paper: #1A1A1B;
+            --accent-paper: #C4A484;
+            --bg-nocturnal: #121212;
+            --text-nocturnal: #E1E1E1;
+            --accent-nocturnal: #8D6E63;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-paper);
+            color: var(--text-paper);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            background-color: var(--bg-nocturnal);
+            color: var(--text-nocturnal);
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .dark-mode header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #theme-toggle {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 20px;
+            background: var(--accent-paper);
+            color: white;
+            font-weight: 600;
+        }
+
+        .dark-mode #theme-toggle {
+            background: var(--accent-nocturnal);
+        }
+
+        .showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mockup-card {
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .dark-mode .mockup-card {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
+        }
+
+        .device {
+            width: 280px;
+            height: 560px;
+            background: white;
+            margin: 1.5rem auto;
+            border: 8px solid #333;
+            border-radius: 36px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .dark-mode .device {
+            background: #121212;
+        }
+
+        .screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Direction 1: Pure Reader */
+        .dir-1 .excerpt {
+            font-family: 'Merriweather', serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: auto 0;
+            text-align: center;
+        }
+
+        .dir-1 .meta {
+            font-size: 0.8rem;
+            color: gray;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Direction 2: Immersive */
+        .dir-2 {
+            background: linear-gradient(rgba(253, 252, 240, 0.9), rgba(253, 252, 240, 0.9)), url('https://placeholder.com/280x560') no-repeat center center;
+            background-size: cover;
+        }
+        .dark-mode .dir-2 {
+            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)), url('https://placeholder.com/280x560') no-repeat center center;
+        }
+
+        /* Direction 3: Bookstore */
+        .dir-3 .cover {
+            width: 120px;
+            height: 180px;
+            background: #ddd;
+            margin: 0 auto 20px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Direction 4: Minimalist Snack */
+        .side-actions {
+            position: absolute;
+            right: 15px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .action-dot {
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .dark-mode .action-dot {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .buy-button {
+            background: #C4A484;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: auto;
+        }
+
+        .info {
+            padding: 1rem;
+        }
+
+        h3 { margin-top: 0; }
+        
+        @media (max-width: 600px) {
+            .showcase { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Readeel - Pistes de Design UX</h1>
+        <button id="theme-toggle">Changer pour le mode Sombre</button>
+    </header>
+
+    <div class="showcase">
+        <!-- Direction 1 -->
+        <div class="mockup-card">
+            <div class="device">
+                <div class="screen dir-1">
+                    <div class="meta">L'Étranger - Albert Camus</div>
+                    <div class="excerpt">
+                        "Aujourd'hui, maman est morte. Ou peut-être hier, je ne sais pas. J'ai reçu un télégramme de l'asile : « Mère décédée. Enterrement demain. Sentiments distingués. » Cela ne veut rien dire. C'était peut-être hier."
+                    </div>
+                    <a href="#" class="buy-button">Acheter sur Amazon</a>
+                </div>
+            </div>
+            <div class="info">
+                <h3>1. Le Lecteur Pur</h3>
+                <p>Focus maximal sur le texte. Interface invisible. Idéal pour une immersion totale.</p>
+                <ul>
+                    <li>Typographie Merriweather large</li>
+                    <li>Centrage vertical</li>
+                    <li>Minimalisme extrême</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Direction 2 -->
+        <div class="mockup-card">
+            <div class="device">
+                <div class="screen dir-2">
+                    <div class="meta">Les Misérables - Victor Hugo</div>
+                    <div class="excerpt">
+                        "Tant qu’il existera, par le fait des lois et des mœurs, une damnation sociale créant artificiellement, en pleine civilisation, des enfers..."
+                    </div>
+                    <div style="margin-top: 20px; height: 4px; background: rgba(0,0,0,0.1); border-radius: 2px;">
+                        <div style="width: 40%; height: 100%; background: #C4A484;"></div>
+                    </div>
+                    <a href="#" class="buy-button">Continuer l'aventure</a>
+                </div>
+            </div>
+            <div class="info">
+                <h3>2. Immersif Audio-Visuel</h3>
+                <p>Usage de textures et de flous pour une sensation "Premium". Barre de progression audio élégante.</p>
+                <ul>
+                    <li>Background texturé</li>
+                    <li>Feedback audio visuel</li>
+                    <li>Bouton CTA intégré</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Direction 3 -->
+        <div class="mockup-card">
+            <div class="device">
+                <div class="screen dir-3">
+                    <div class="cover"></div>
+                    <div class="meta"><strong>Le Petit Prince</strong><br>Antoine de Saint-Exupéry</div>
+                    <div class="excerpt" style="font-family: 'Merriweather'; font-size: 0.9rem;">
+                        "Dessine-moi un mouton..."
+                    </div>
+                    <a href="#" class="buy-button">Découvrir le livre</a>
+                </div>
+            </div>
+            <div class="info">
+                <h3>3. La Librairie Moderne</h3>
+                <p>Met en avant l'objet livre physique. Transition douce entre la couverture et le texte.</p>
+                <ul>
+                    <li>Couverture visible</li>
+                    <li>Hiérarchie classique</li>
+                    <li>Sentiment de "possession"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Direction 4 -->
+        <div class="mockup-card">
+            <div class="device">
+                <div class="screen dir-4">
+                    <div class="excerpt" style="font-family: 'Merriweather';">
+                        "En un lieu de la Manche, dont je ne veux pas me rappeler le nom, il n'y a pas longtemps qu'appelait un hidalgo..."
+                    </div>
+                    <div class="side-actions">
+                        <div class="action-dot">❤️</div>
+                        <div class="action-dot">🛒</div>
+                        <div class="action-dot">💬</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <h3>4. Le Snacking Rapide (TikTok Style)</h3>
+                <p>Actions rapides sur le côté. Pensé pour un usage intense à une main.</p>
+                <ul>
+                    <li>Menu latéral transparent</li>
+                    <li>Focus sur l'interaction</li>
+                    <li>Facilité de mise en favori</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('theme-toggle');
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.textContent = 'Changer pour le mode Clair';
+            } else {
+                btn.textContent = 'Changer pour le mode Sombre';
+            }
+        });
+    </script>
+</body>
+</html>

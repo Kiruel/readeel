@@ -1,0 +1,24 @@
+class: Book
+table: books
+fields:
+  title: String
+  author: String
+  description: String?
+  coverUrl: String?
+  isbn: String?
+  publishedYear: int?
+  language: String
+  source: String
+  externalId: String
+  isPublicDomain: bool
+  content: String?
+indexes:
+  books_title_idx:
+    fields: title
+  books_author_idx:
+    fields: author
+  books_language_idx:
+    fields: language
+  books_source_idx:
+    fields: source, externalId
+    unique: true

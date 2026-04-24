@@ -112,10 +112,12 @@ def fetch_gutendex_metadata(gutenberg_id: str) -> dict | None:
             data = r.json()
             authors = data.get("authors", [])
             author_name = authors[0]["name"] if authors else "Unknown Author"
+            formats = data.get("formats", {}) or {}
             result = {
                 "title": data.get("title", ""),
                 "author": author_name,
                 "languages": data.get("languages", []),
+                "coverUrl": formats.get("image/jpeg"),
             }
             with cache_lock:
                 GUTENDEX_CACHE[gutenberg_id] = result
@@ -139,12 +141,14 @@ def process_single_book(book, db_pool, stats):
 
             # Fetch accurate metadata
             meta = fetch_gutendex_metadata(gutenberg_id)
+            cover_url = None
             if meta:
                 title  = meta["title"] or local_title
                 author = meta["author"] or local_author
+                cover_url = meta.get("coverUrl")
                 if meta["languages"]:
                     language = meta["languages"][0]
-                log.info(f"  [{gutenberg_id}] '{title[:50]}' ({language}) — Gutendex ✓")
+                log.info(f"  [{gutenberg_id}] '{title[:50]}' ({language}) {cover_url} — Gutendex ✓")
             else:
                 title  = local_title
                 author = local_author
@@ -152,11 +156,13 @@ def process_single_book(book, db_pool, stats):
 
             # Insert book
             cur.execute("""
-                INSERT INTO books (title, author, language, source, "externalId", "isPublicDomain")
-                VALUES (%s, %s, %s, 'gutenberg', %s, TRUE)
-                ON CONFLICT (source, "externalId") DO NOTHING
+                INSERT INTO books (title, author, language, "coverUrl", source, "externalId", "isPublicDomain")
+                VALUES (%s, %s, %s, %s, 'gutenberg', %s, TRUE)
+                ON CONFLICT (source, "externalId") DO UPDATE 
+                SET "coverUrl" = EXCLUDED."coverUrl" 
+                WHERE books."coverUrl" IS NULL AND EXCLUDED."coverUrl" IS NOT NULL
                 RETURNING id
-            """, (title[:500], author[:300], language[:10], gutenberg_id))
+            """, (title[:500], author[:300], language[:10], cover_url, gutenberg_id))
 
             row = cur.fetchone()
             if not row:

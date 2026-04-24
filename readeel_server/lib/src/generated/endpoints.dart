@@ -270,6 +270,11 @@ class Endpoints extends _i1.EndpointDispatch {
               type: _i1.getType<int>(),
               nullable: false,
             ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
           },
           call:
               (
@@ -280,6 +285,7 @@ class Endpoints extends _i1.EndpointDispatch {
                     session,
                     languageCode: params['languageCode'],
                     limit: params['limit'],
+                    offset: params['offset'],
                   ),
         ),
       },

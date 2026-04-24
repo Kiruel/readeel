@@ -26,6 +26,8 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required this.externalId,
     required this.isPublicDomain,
     this.content,
+    this.amazonLink,
+    this.amazonAsin,
   });
 
   factory Book({
@@ -41,6 +43,8 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required String externalId,
     required bool isPublicDomain,
     String? content,
+    String? amazonLink,
+    String? amazonAsin,
   }) = _BookImpl;
 
   factory Book.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -59,6 +63,8 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
         jsonSerialization['isPublicDomain'],
       ),
       content: jsonSerialization['content'] as String?,
+      amazonLink: jsonSerialization['amazonLink'] as String?,
+      amazonAsin: jsonSerialization['amazonAsin'] as String?,
     );
   }
 
@@ -91,6 +97,10 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   String? content;
 
+  String? amazonLink;
+
+  String? amazonAsin;
+
   @override
   _i1.Table<int?> get table => t;
 
@@ -110,6 +120,8 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     String? externalId,
     bool? isPublicDomain,
     String? content,
+    String? amazonLink,
+    String? amazonAsin,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -127,6 +139,8 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'externalId': externalId,
       'isPublicDomain': isPublicDomain,
       if (content != null) 'content': content,
+      if (amazonLink != null) 'amazonLink': amazonLink,
+      if (amazonAsin != null) 'amazonAsin': amazonAsin,
     };
   }
 
@@ -146,6 +160,8 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'externalId': externalId,
       'isPublicDomain': isPublicDomain,
       if (content != null) 'content': content,
+      if (amazonLink != null) 'amazonLink': amazonLink,
+      if (amazonAsin != null) 'amazonAsin': amazonAsin,
     };
   }
 
@@ -195,6 +211,8 @@ class _BookImpl extends Book {
     required String externalId,
     required bool isPublicDomain,
     String? content,
+    String? amazonLink,
+    String? amazonAsin,
   }) : super._(
          id: id,
          title: title,
@@ -208,6 +226,8 @@ class _BookImpl extends Book {
          externalId: externalId,
          isPublicDomain: isPublicDomain,
          content: content,
+         amazonLink: amazonLink,
+         amazonAsin: amazonAsin,
        );
 
   /// Returns a shallow copy of this [Book]
@@ -227,6 +247,8 @@ class _BookImpl extends Book {
     String? externalId,
     bool? isPublicDomain,
     Object? content = _Undefined,
+    Object? amazonLink = _Undefined,
+    Object? amazonAsin = _Undefined,
   }) {
     return Book(
       id: id is int? ? id : this.id,
@@ -241,6 +263,8 @@ class _BookImpl extends Book {
       externalId: externalId ?? this.externalId,
       isPublicDomain: isPublicDomain ?? this.isPublicDomain,
       content: content is String? ? content : this.content,
+      amazonLink: amazonLink is String? ? amazonLink : this.amazonLink,
+      amazonAsin: amazonAsin is String? ? amazonAsin : this.amazonAsin,
     );
   }
 }
@@ -302,6 +326,16 @@ class BookUpdateTable extends _i1.UpdateTable<BookTable> {
     table.content,
     value,
   );
+
+  _i1.ColumnValue<String, String> amazonLink(String? value) => _i1.ColumnValue(
+    table.amazonLink,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> amazonAsin(String? value) => _i1.ColumnValue(
+    table.amazonAsin,
+    value,
+  );
 }
 
 class BookTable extends _i1.Table<int?> {
@@ -351,6 +385,14 @@ class BookTable extends _i1.Table<int?> {
       'content',
       this,
     );
+    amazonLink = _i1.ColumnString(
+      'amazonLink',
+      this,
+    );
+    amazonAsin = _i1.ColumnString(
+      'amazonAsin',
+      this,
+    );
   }
 
   late final BookUpdateTable updateTable;
@@ -377,6 +419,10 @@ class BookTable extends _i1.Table<int?> {
 
   late final _i1.ColumnString content;
 
+  late final _i1.ColumnString amazonLink;
+
+  late final _i1.ColumnString amazonAsin;
+
   @override
   List<_i1.Column> get columns => [
     id,
@@ -391,6 +437,8 @@ class BookTable extends _i1.Table<int?> {
     externalId,
     isPublicDomain,
     content,
+    amazonLink,
+    amazonAsin,
   ];
 }
 

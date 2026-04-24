@@ -5,7 +5,7 @@ class ExcerptEndpoint extends Endpoint {
   @override
   bool get requireLogin => false;
 
-  Future<List<ExcerptWithBook>> getDiscoverFeed(Session session, {String? languageCode, int limit = 10}) async {
+  Future<List<ExcerptWithBook>> getDiscoverFeed(Session session, {String? languageCode, int limit = 10, int offset = 0}) async {
     // We prioritize excerpts where the book language matches the phone setup.
     List<Excerpt> excerpts = [];
     
@@ -14,6 +14,7 @@ class ExcerptEndpoint extends Endpoint {
         session,
         where: (t) => t.book.language.equals(languageCode),
         limit: limit,
+        offset: offset,
         include: Excerpt.include(
           book: Book.include(),
         ),
@@ -27,6 +28,8 @@ class ExcerptEndpoint extends Endpoint {
           ? (t) => t.book.language.notEquals(languageCode) 
           : null,
         limit: limit - excerpts.length,
+        // Since this is a fallback query, we approximate the offset for the second group.
+        offset: (languageCode != null && excerpts.isEmpty) ? offset : 0, 
         include: Excerpt.include(
           book: Book.include(),
         ),

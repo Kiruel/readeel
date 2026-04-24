@@ -251,12 +251,14 @@ class EndpointExcerpt extends _i2.EndpointRef {
   _i3.Future<List<_i5.ExcerptWithBook>> getDiscoverFeed({
     String? languageCode,
     required int limit,
+    required int offset,
   }) => caller.callServerEndpoint<List<_i5.ExcerptWithBook>>(
     'excerpt',
     'getDiscoverFeed',
     {
       'languageCode': languageCode,
       'limit': limit,
+      'offset': offset,
     },
   );
 }

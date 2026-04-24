@@ -12,6 +12,8 @@ fields:
   externalId: String
   isPublicDomain: bool
   content: String?
+  amazonLink: String?
+  amazonAsin: String?
 indexes:
   books_title_idx:
     fields: title

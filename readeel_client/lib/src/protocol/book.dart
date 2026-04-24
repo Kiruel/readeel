@@ -26,6 +26,8 @@ abstract class Book implements _i1.SerializableModel {
     required this.externalId,
     required this.isPublicDomain,
     this.content,
+    this.amazonLink,
+    this.amazonAsin,
   });
 
   factory Book({
@@ -41,6 +43,8 @@ abstract class Book implements _i1.SerializableModel {
     required String externalId,
     required bool isPublicDomain,
     String? content,
+    String? amazonLink,
+    String? amazonAsin,
   }) = _BookImpl;
 
   factory Book.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -59,6 +63,8 @@ abstract class Book implements _i1.SerializableModel {
         jsonSerialization['isPublicDomain'],
       ),
       content: jsonSerialization['content'] as String?,
+      amazonLink: jsonSerialization['amazonLink'] as String?,
+      amazonAsin: jsonSerialization['amazonAsin'] as String?,
     );
   }
 
@@ -89,6 +95,10 @@ abstract class Book implements _i1.SerializableModel {
 
   String? content;
 
+  String? amazonLink;
+
+  String? amazonAsin;
+
   /// Returns a shallow copy of this [Book]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -105,6 +115,8 @@ abstract class Book implements _i1.SerializableModel {
     String? externalId,
     bool? isPublicDomain,
     String? content,
+    String? amazonLink,
+    String? amazonAsin,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -122,6 +134,8 @@ abstract class Book implements _i1.SerializableModel {
       'externalId': externalId,
       'isPublicDomain': isPublicDomain,
       if (content != null) 'content': content,
+      if (amazonLink != null) 'amazonLink': amazonLink,
+      if (amazonAsin != null) 'amazonAsin': amazonAsin,
     };
   }
 
@@ -147,6 +161,8 @@ class _BookImpl extends Book {
     required String externalId,
     required bool isPublicDomain,
     String? content,
+    String? amazonLink,
+    String? amazonAsin,
   }) : super._(
          id: id,
          title: title,
@@ -160,6 +176,8 @@ class _BookImpl extends Book {
          externalId: externalId,
          isPublicDomain: isPublicDomain,
          content: content,
+         amazonLink: amazonLink,
+         amazonAsin: amazonAsin,
        );
 
   /// Returns a shallow copy of this [Book]
@@ -179,6 +197,8 @@ class _BookImpl extends Book {
     String? externalId,
     bool? isPublicDomain,
     Object? content = _Undefined,
+    Object? amazonLink = _Undefined,
+    Object? amazonAsin = _Undefined,
   }) {
     return Book(
       id: id is int? ? id : this.id,
@@ -193,6 +213,8 @@ class _BookImpl extends Book {
       externalId: externalId ?? this.externalId,
       isPublicDomain: isPublicDomain ?? this.isPublicDomain,
       content: content is String? ? content : this.content,
+      amazonLink: amazonLink is String? ? amazonLink : this.amazonLink,
+      amazonAsin: amazonAsin is String? ? amazonAsin : this.amazonAsin,
     );
   }
 }

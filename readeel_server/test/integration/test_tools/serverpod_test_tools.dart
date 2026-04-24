@@ -498,6 +498,7 @@ class _ExcerptEndpoint {
     _i1.TestSessionBuilder sessionBuilder, {
     String? languageCode,
     required int limit,
+    required int offset,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -513,6 +514,7 @@ class _ExcerptEndpoint {
           parameters: _i1.testObjectToJson({
             'languageCode': languageCode,
             'limit': limit,
+            'offset': offset,
           }),
           serializationManager: _serializationManager,
         );

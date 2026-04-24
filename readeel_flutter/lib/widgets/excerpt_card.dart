@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:readeel_client/readeel_client.dart';
 
 class ExcerptCard extends StatelessWidget {
@@ -26,91 +27,81 @@ class ExcerptCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-        
-        // 2. Backdrop Filter for Blur Effect
-        Positioned.fill(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
-            child: Container(
-              color: theme.scaffoldBackgroundColor.withValues(alpha: 0.8),
-            ),
-          ),
-        ),
 
         // 3. Main Content
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 48),
-                // Book Title & Author
-                Text(
-                  book.title,
-                  style: theme.textTheme.displayLarge?.copyWith(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'by ${book.author}',
-                  style: theme.textTheme.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-                
-                const Spacer(),
-                
-                // Excerpt Content (Vertically Centered)
-                Expanded(
-                  flex: 10,
-                  child: Center(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Text(
-                        excerpt.content,
-                        style: theme.textTheme.bodyLarge,
-                        textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 32.0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Excerpt Content (Vertically Centered)
+              Expanded(
+                flex: 10,
+                child: Center(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.only(top: 16.0, bottom: 100),
+                    child: SafeArea(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              style: DefaultTextStyle.of(context).style,
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: '"',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 48,
+                                    fontFamily: GoogleFonts.mogra().fontFamily,
+                                    color: theme.colorScheme.primary,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: excerpt.content,
+                                  style: theme.textTheme.bodyMedium,
+                                ),
+                                TextSpan(
+                                  text: '"',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 48,
+                                    fontFamily: GoogleFonts.mogra(
+                                      letterSpacing: 10,
+                                    ).fontFamily,
+                                    color: theme.colorScheme.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            book.title,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
+                          Text(
+                            'by ${book.author}',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-                
-                const Spacer(),
-
-                // Actions Footer
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.favorite_border),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Added to Library')),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 16),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // In a real app, launch URL
-                      },
-                      icon: const Icon(Icons.shopping_cart),
-                      label: const Text('Buy on Amazon'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.colorScheme.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    IconButton(
-                      icon: const Icon(Icons.share),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

@@ -19,16 +19,6 @@ class ExcerptCard extends StatelessWidget {
 
     return Stack(
       children: [
-        // 1. Blurred Background Image (Placeholder for now)
-        if (book.coverUrl != null)
-          Positioned.fill(
-            child: Image.network(
-              book.coverUrl!,
-              fit: BoxFit.cover,
-            ),
-          ),
-
-        // 3. Main Content
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 32.0,
@@ -79,21 +69,57 @@ class ExcerptCard extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Text(
-                            book.title,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: theme.colorScheme.primary,
-                            ),
-                          ),
-                          Text(
-                            'by ${book.author}',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              fontStyle: FontStyle.italic,
-                              fontSize: 12,
-                            ),
-                            textAlign: TextAlign.left,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (book.coverUrl != null) ...[
+                                Image.network(
+                                  book.coverUrl!,
+                                  fit: BoxFit.cover,
+                                  width: 60,
+                                  height: 90,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return SizedBox(
+                                          width: 60,
+                                          height: 90,
+                                          child: const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        );
+                                      },
+                                ),
+                                const SizedBox(width: 16),
+                              ],
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      book.title,
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color: theme.colorScheme.primary,
+                                          ),
+                                    ),
+                                    Text(
+                                      'by ${book.author}',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: 12,
+                                          ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

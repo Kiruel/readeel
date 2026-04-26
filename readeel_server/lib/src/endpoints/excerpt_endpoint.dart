@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:serverpod/serverpod.dart';
 import '../generated/protocol.dart';
 
@@ -8,36 +9,76 @@ class ExcerptEndpoint extends Endpoint {
   Future<List<ExcerptWithBook>> getDiscoverFeed(Session session, {String? languageCode, int limit = 10, int offset = 0}) async {
     // We prioritize excerpts where the book language matches the phone setup.
     List<Excerpt> excerpts = [];
+    final random = Random();
     
     if (languageCode != null) {
-      excerpts = await Excerpt.db.find(
+      final count = await Excerpt.db.count(
         session,
         where: (t) => t.book.language.equals(languageCode),
-        limit: limit,
-        offset: offset,
-        include: Excerpt.include(
-          book: Book.include(),
-        ),
       );
+      
+      if (count > 0) {
+        final futures = List.generate(limit, (_) async {
+          int rOffset = random.nextInt(count);
+          final res = await Excerpt.db.find(
+            session,
+            where: (t) => t.book.language.equals(languageCode),
+            limit: 1,
+            offset: rOffset,
+            include: Excerpt.include(
+              book: Book.include(),
+            ),
+          );
+          return res.isNotEmpty ? res.first : null;
+        });
+        
+        final results = await Future.wait(futures);
+        for (var e in results) {
+          if (e != null) excerpts.add(e);
+        }
+      }
     }
 
     if (excerpts.length < limit) {
-      final additionalExcerpts = await Excerpt.db.find(
+      final remainingCount = limit - excerpts.length;
+      final fallbackCount = await Excerpt.db.count(
         session,
         where: languageCode != null 
           ? (t) => t.book.language.notEquals(languageCode) 
           : null,
-        limit: limit - excerpts.length,
-        // Since this is a fallback query, we approximate the offset for the second group.
-        offset: (languageCode != null && excerpts.isEmpty) ? offset : 0, 
-        include: Excerpt.include(
-          book: Book.include(),
-        ),
       );
-      excerpts.addAll(additionalExcerpts);
+      
+      if (fallbackCount > 0) {
+        final futures = List.generate(remainingCount, (_) async {
+          int rOffset = random.nextInt(fallbackCount);
+          final res = await Excerpt.db.find(
+            session,
+            where: languageCode != null 
+              ? (t) => t.book.language.notEquals(languageCode) 
+              : null,
+            limit: 1,
+            offset: rOffset,
+            include: Excerpt.include(
+              book: Book.include(),
+            ),
+          );
+          return res.isNotEmpty ? res.first : null;
+        });
+        
+        final results = await Future.wait(futures);
+        for (var e in results) {
+          if (e != null) excerpts.add(e);
+        }
+      }
     }
 
-    return excerpts.map((e) => ExcerptWithBook(
+    // Deduplicate in case random offsets picked the same row
+    final uniqueExcerpts = <int, Excerpt>{};
+    for (var e in excerpts) {
+      if (e.id != null) uniqueExcerpts[e.id!] = e;
+    }
+
+    return uniqueExcerpts.values.map((e) => ExcerptWithBook(
       excerpt: e,
       book: e.book!,
     )).toList();

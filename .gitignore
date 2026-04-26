@@ -9,3 +9,4 @@ rdf-files.tar.bz2
 
 .DS_Store
 scripts/.DS_Store
+scripts/.env

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
+
 import 'readeel_theme.dart';
 import 'screens/feed_screen.dart';
+import 'settings_controller.dart';
 
 /// Sets up a global client object that can be used to talk to the server from
 /// anywhere in our app. The client is generated from your server code
@@ -15,10 +19,15 @@ import 'screens/feed_screen.dart';
 /// instead of using a global client object. This is just a simple example.
 late final Client client;
 
+late final SettingsController settingsController;
+
 late String serverUrl;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  settingsController = SettingsController();
+  await settingsController.loadSettings();
 
   // When you are running the app on a physical device, you need to set the
   // server URL to the IP address of your computer. You can find the IP
@@ -45,12 +54,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Readeel',
-      debugShowCheckedModeBanner: false,
-      theme: ReadeelTheme.lightTheme,
-      darkTheme: ReadeelTheme.darkTheme,
-      home: const FeedScreen(),
+    return ListenableBuilder(
+      listenable: settingsController,
+      builder: (BuildContext context, Widget? child) {
+        return MaterialApp(
+          title: 'Readeel',
+          debugShowCheckedModeBanner: false,
+          theme: ReadeelTheme.lightTheme,
+          darkTheme: ReadeelTheme.darkTheme,
+          themeMode: settingsController.themeMode,
+          locale: settingsController.languageCode != null ? Locale(settingsController.languageCode!) : null,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const FeedScreen(),
+        );
+      },
     );
   }
 }

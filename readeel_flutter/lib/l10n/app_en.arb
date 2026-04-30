@@ -1,0 +1,62 @@
+{
+  "settings": "Settings",
+  "@settings": {
+    "description": "Title of the settings screen"
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Section header for appearance settings"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Label for theme selection"
+  },
+  "systemDefault": "System Default",
+  "@systemDefault": {
+    "description": "Option to use system default setting"
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": "Option to use light mode"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Option to use dark mode"
+  },
+  "content": "Content",
+  "@content": {
+    "description": "Section header for content settings"
+  },
+  "feedLanguage": "Feed Language",
+  "@feedLanguage": {
+    "description": "Label for feed language selection"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Language option English"
+  },
+  "french": "French",
+  "@french": {
+    "description": "Language option French"
+  },
+  "italian": "Italian",
+  "@italian": {
+    "description": "Language option Italian"
+  },
+  "german": "German",
+  "@german": {
+    "description": "Language option German"
+  },
+  "spanish": "Spanish",
+  "@spanish": {
+    "description": "Language option Spanish"
+  },
+  "continueReading": "Continue reading",
+  "@continueReading": {
+    "description": "Label for the continue reading button"
+  },
+  "swipeLeftToNext": "Swipe left to read more",
+  "@swipeLeftToNext": {
+    "description": "Onboarding instruction"
+  }
+}

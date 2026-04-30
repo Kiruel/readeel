@@ -1,0 +1,17 @@
+{
+  "settings": "Impostazioni",
+  "appearance": "Aspetto",
+  "theme": "Tema",
+  "systemDefault": "Predefinito di sistema",
+  "lightMode": "Modalità chiara",
+  "darkMode": "Modalità scura",
+  "content": "Contenuto",
+  "feedLanguage": "Lingua del feed",
+  "english": "Inglese",
+  "french": "Francese",
+  "italian": "Italiano",
+  "german": "Tedesco",
+  "spanish": "Spagnolo",
+  "continueReading": "Continua a leggere",
+  "swipeLeftToNext": "Scorri a sinistra per leggere di più"
+}

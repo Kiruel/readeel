@@ -8,4 +8,6 @@ workspace:
   - readeel_client
   - readeel_server
   - readeel_flutter
+dependencies:
+  flutter_svg: ^2.2.4
 
